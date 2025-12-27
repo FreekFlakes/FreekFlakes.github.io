@@ -373,3 +373,138 @@ body {
 #clock {
     font-size: 12px;
 }
+
+/* Start Menu */
+#start-menu {
+    position: fixed;
+    bottom: 28px;
+    left: 2px;
+    background-color: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    display: flex;
+    z-index: 2000;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11px;
+    width: 170px;
+}
+
+.start-side-banner {
+    width: 25px;
+    background: linear-gradient(to bottom, #000080, #1084d0 10%, #000080);
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 5px;
+}
+
+.vertical-text {
+    transform: rotate(-90deg);
+    color: white;
+    font-size: 16px;
+    white-space: nowrap;
+    transform-origin: bottom left;
+    margin-left: 20px;
+}
+
+.start-items {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+}
+
+.start-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    cursor: default;
+    position: relative;
+    /* For submenu positioning */
+}
+
+.start-item:hover {
+    background-color: #000080;
+    color: white;
+}
+
+.start-item img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.start-item span.label {
+    flex-grow: 1;
+}
+
+.submenu-arrow {
+    margin-left: auto;
+    font-size: 10px;
+}
+
+.start-item hr {
+    margin: 2px 0;
+    border: 0;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #fff;
+    width: 100%;
+}
+
+/* Submenu */
+.submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    min-width: 150px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 2001;
+}
+
+.start-item:hover>.submenu {
+    display: block;
+}
+
+/* Separators in start menu are currently divs with HRs.
+   Let's target HRs directly inside start-items container if possible, 
+   but above HTML used divs. Let's fix the HTML structure assumptions in CSS.
+   The HTML had <hr> as direct children of .start-items.
+*/
+.start-items>hr {
+    margin: 3px 2px;
+    border: 0;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #fff;
+}
+
+
+/* Shutdown Dialog Specifics */
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.win98-btn {
+    min-width: 75px;
+    height: 23px;
+    background-color: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.win98-btn:active {
+    border: 2px solid #000;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+}

@@ -245,3 +245,80 @@ document.addEventListener('mouseup', () => {
 document.addEventListener('dragstart', (e) => {
     e.preventDefault();
 });
+
+
+/* Start Menu & Shutdown Logic */
+const startMenu = document.getElementById('start-menu');
+const startButton = document.getElementById('start-button');
+const shutdownDialog = document.getElementById('window-shutdown');
+const shutdownScreen = document.getElementById('shutdown-screen');
+
+function toggleStartMenu() {
+    if (startMenu.style.display === 'block') {
+        startMenu.style.display = 'none';
+        startButton.classList.remove('active');
+    } else {
+        startMenu.style.display = 'block';
+        startButton.classList.add('active');
+    }
+}
+
+// Bind click to Start Button
+startButton.onclick = (e) => {
+    e.stopPropagation();
+    toggleStartMenu();
+};
+
+// Close Start Menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (startMenu.style.display === 'block' &&
+        !startMenu.contains(e.target) &&
+        e.target !== startButton) {
+        startMenu.style.display = 'none';
+        startButton.classList.remove('active');
+    }
+});
+
+function openRun() {
+    toggleStartMenu();
+    // Placeholder for Run dialog
+    alert("Run dialog not implemented yet.");
+}
+
+function openShutdown() {
+    toggleStartMenu();
+    shutdownDialog.style.display = 'flex';
+
+    // Center the window manually (better for drag behavior than CSS transform)
+    const rect = shutdownDialog.getBoundingClientRect();
+    const x = (window.innerWidth - 350) / 2; // 350 is width defined in HTML/CSS
+    const y = (window.innerHeight - rect.height) / 2;
+
+    // Default fallback if rect is empty (hidden)
+    shutdownDialog.style.left = `${Math.max(0, x)}px`;
+    shutdownDialog.style.top = `${Math.max(0, (window.innerHeight - 200) / 2)}px`;
+}
+
+function closeShutdown() {
+    shutdownDialog.style.display = 'none';
+}
+
+function performShutdown() {
+    const action = document.querySelector('input[name="shutdown-action"]:checked').value;
+
+    closeShutdown();
+
+    if (action === 'shutdown') {
+        // Hide UI, show safe screen
+        document.getElementById('taskbar').style.display = 'none';
+        document.getElementById('desktop').style.display = 'none';
+        shutdownScreen.style.display = 'flex';
+
+        // Optional: Enter full screen to make it immersive?
+        // document.documentElement.requestFullscreen();
+
+    } else if (action === 'restart' || action === 'restart-dos') {
+        location.reload();
+    }
+}
+

@@ -45,6 +45,112 @@
             <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="win-logo">
             <b>Start</b>
         </button>
+
+        <!-- Start Menu -->
+        <div id="start-menu" style="display: none;">
+            <div class="start-side-banner">
+                <span class="vertical-text">Windows<b>98</b></span>
+            </div>
+            <div class="start-items">
+                <div class="start-item">
+                    <img src="https://win98icons.alexmeub.com/icons/png/update-0.png">
+                    <span>Windows Update</span>
+                </div>
+                <hr>
+                <div class="start-item has-submenu">
+                    <img src="https://win98icons.alexmeub.com/icons/png/programs-2.png">
+                    <span>Programs</span>
+                    <div class="submenu-arrow">▸</div>
+                    <div class="submenu">
+                        <div class="start-item">
+                            <img src="https://win98icons.alexmeub.com/icons/png/accessories-2.png">
+                            <span>Accessories</span>
+                        </div>
+                        <div class="start-item">
+                            <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png">
+                            <span>Internet Explorer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="start-item">
+                    <img src="https://win98icons.alexmeub.com/icons/png/favorites-2.png">
+                    <span>Favorites</span>
+                    <div class="submenu-arrow">▸</div>
+                </div>
+                <div class="start-item">
+                    <img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png">
+                    <span>Documents</span>
+                    <div class="submenu-arrow">▸</div>
+                </div>
+                <div class="start-item">
+                    <img src="https://win98icons.alexmeub.com/icons/png/settings_gear-2.png">
+                    <span>Settings</span>
+                    <div class="submenu-arrow">▸</div>
+                </div>
+                <div class="start-item">
+                    <img src="https://win98icons.alexmeub.com/icons/png/find_file-2.png">
+                    <span>Find</span>
+                    <div class="submenu-arrow">▸</div>
+                </div>
+                <div class="start-item">
+                    <img src="https://win98icons.alexmeub.com/icons/png/help_book_big-0.png">
+                    <span>Help</span>
+                </div>
+                <div class="start-item" onclick="openRun()">
+                    <img src="https://win98icons.alexmeub.com/icons/png/run-1.png">
+                    <span>Run...</span>
+                </div>
+                <hr>
+                <div class="start-item" onclick="openShutdown()">
+                    <img src="https://win98icons.alexmeub.com/icons/png/shut_down_cool-4.png">
+                    <span>Shut Down...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shutdown Dialog -->
+        <div id="window-shutdown" class="window-98" style="display: none; width: 350px; z-index: 9999;">
+            <div class="title-bar" onmousedown="startDrag(event, 'shutdown')">
+                <div class="title-bar-text">Shut Down Windows</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Close" onclick="closeShutdown()">X</button>
+                </div>
+            </div>
+            <div class="window-body" style="padding: 15px; display: flex; flex-direction: column; gap: 20px;">
+                <div style="display: flex; gap: 15px;">
+                    <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="32" height="32">
+                    <div style="flex-grow: 1;">
+                        <p style="margin: 0 0 10px 0;">What do you want the computer to do?</p>
+
+                        <div class="radio-option">
+                            <input type="radio" name="shutdown-action" id="action-shutdown" value="shutdown" checked>
+                            <label for="action-shutdown">Shut down</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="shutdown-action" id="action-restart" value="restart">
+                            <label for="action-restart">Restart</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="shutdown-action" id="action-restart-dos" value="restart-dos">
+                            <label for="action-restart-dos">Restart in MS-DOS mode</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                    <button class="win98-btn" onclick="performShutdown()">OK</button>
+                    <button class="win98-btn" onclick="closeShutdown()">Cancel</button>
+                    <button class="win98-btn">Help</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shutdown Screen (The "It is now safe..." screen) -->
+        <div id="shutdown-screen"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 10000; align-items: center; justify-content: center; color: #E07D10; font-family: 'Segoe UI', sans-serif; font-size: 24px;">
+            It is now safe to turn off your computer.
+        </div>
+
         <div class="divider"></div>
 
         <!-- Quick Launch -->

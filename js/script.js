@@ -184,6 +184,7 @@ function arrangeIcons() {
 
         // Add mousedown for dragging icons
         icon.addEventListener('mousedown', (e) => {
+            e.preventDefault();
             selectIcon(icon);
             startDragElement(e, icon);
         });
@@ -211,6 +212,7 @@ let dragOffsetY = 0;
 function startDrag(e, appId) {
     // Wrapper for window title bar drag
     if (e.target.tagName === 'BUTTON') return;
+    e.preventDefault();
     const win = document.getElementById(`window-${appId}`);
     startDragElement(e, win);
     bringToFront(appId);
@@ -238,3 +240,8 @@ document.addEventListener('mouseup', () => {
 });
 
 // Icon double click simulated by HTML ondblclick
+
+// Prevent default native drag (ghost image)
+document.addEventListener('dragstart', (e) => {
+    e.preventDefault();
+});

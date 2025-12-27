@@ -254,11 +254,11 @@ const shutdownDialog = document.getElementById('window-shutdown');
 const shutdownScreen = document.getElementById('shutdown-screen');
 
 function toggleStartMenu() {
-    if (startMenu.style.display === 'block') {
+    if (startMenu.style.display === 'flex') {
         startMenu.style.display = 'none';
         startButton.classList.remove('active');
     } else {
-        startMenu.style.display = 'block';
+        startMenu.style.display = 'flex';
         startButton.classList.add('active');
     }
 }

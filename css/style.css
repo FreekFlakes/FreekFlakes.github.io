@@ -375,6 +375,7 @@ body {
 }
 
 /* Start Menu */
+/* Start Menu */
 #start-menu {
     position: fixed;
     bottom: 28px;
@@ -388,24 +389,34 @@ body {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     font-family: 'Segoe UI', sans-serif;
     font-size: 11px;
-    width: 170px;
+    min-width: 170px;
+    /* Ensure content determines height or min-height */
 }
 
 .start-side-banner {
     width: 25px;
-    background: linear-gradient(to bottom, #000080, #1084d0 10%, #000080);
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 5px;
+    background: linear-gradient(to bottom, #000080, #1084d0 5%, #000080 15%);
+    position: relative;
+    /* We will position text absolutely inside */
 }
 
 .vertical-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     transform: rotate(-90deg);
-    color: white;
-    font-size: 16px;
-    white-space: nowrap;
     transform-origin: bottom left;
-    margin-left: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 0 0 5px 5px;
+    /* Adjust padding to move it off the edge */
+}
+
+/* Specific stronger bold for 98 */
+.vertical-text b {
+    font-weight: 900;
 }
 
 .start-items {

@@ -62,7 +62,7 @@ const appContent = {
                 <div class="menu-item">Search</div>
                 <div class="menu-item">Help</div>
             </div>
-            <textarea class="notepad-body">${textContent}</textarea>
+            <div class="notepad-body" contenteditable="true">${textContent}</div>
         `}
     },
     'lore-folder': {

@@ -49,24 +49,80 @@ const appContent = {
         `
     },
     'raijin-bio': {
-        title: 'Raijin.txt - Notepad',
+        title: 'Notepad',
         icon: 'https://win98icons.alexmeub.com/icons/png/notepad-0.png',
         type: 'notepad',
-        render: () => `
+        content: 'Raijin (雷神) is a god of lightning, thunder and storms in Japanese mythology/n/n(Select a file from the Lore folder to read more.)',
+        render: function () {
+            const textContent = this.content || '';
+            return `
             <div class="menu-bar">
                 <div class="menu-item">File</div>
                 <div class="menu-item">Edit</div>
                 <div class="menu-item">Search</div>
                 <div class="menu-item">Help</div>
             </div>
-            <textarea class="notepad-body">Raijin (雷神) is a god of lightning, thunder and storms in Japanese mythology and the Shinto religion.</textarea>
+            <textarea class="notepad-body">${textContent}</textarea>
+        `}
+    },
+    'lore-folder': {
+        title: 'Raijin Lore',
+        icon: 'https://win98icons.alexmeub.com/icons/png/directory_open-0.png',
+        type: 'explorer',
+        render: () => `
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Help</div>
+            </div>
+            <div class="explorer-body">
+                <div class="explorer-item" onclick="openNotepad('raijin_lore.txt')">
+                    <img src="https://win98icons.alexmeub.com/icons/png/template_empty-2.png">
+                    <span>raijin_lore.txt</span>
+                </div>
+                <div class="explorer-item" onclick="openNotepad('drums.txt')">
+                    <img src="https://win98icons.alexmeub.com/icons/png/template_empty-2.png">
+                    <span>drums.txt</span>
+                </div>
+                <div class="explorer-item" onclick="openNotepad('folklore.txt')">
+                    <img src="https://win98icons.alexmeub.com/icons/png/template_empty-2.png">
+                    <span>folklore.txt</span>
+                </div>
+            </div>
         `
     },
     'gallery': {
         title: 'Thunder_Gallery - Paint',
         icon: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png',
         type: 'generic',
-        render: () => '<p>Loading images...</p><div style="background:black; width:100%; height:100px; color:white; display:flex; align-items:center; justify-content:center;">[Placeholder Image]</div>'
+        render: () => `
+            <div style="padding:10px; text-align:center; background-color:#fff; height:100%; overflow-y:auto;">
+                <p style="margin-top:0; color:#000;">Collection of sacred thunder imagery</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                    <div style="border: 2px solid #808080; padding: 2px;">
+                        <img src="img/raijin_pixel.png" style="width: 150px; height: auto; display: block;" title="Raijin Sprite">
+                        <p style="margin:2px 0 0; font-size:10px;">Classic Sprite</p>
+                    </div>
+                    <div style="border: 2px solid #808080; padding: 2px;">
+                        <img src="img/raijin_drums.png" style="width: 150px; height: auto; display: block;" title="Thunder Drums">
+                        <p style="margin:2px 0 0; font-size:10px;">Drum Detail</p>
+                    </div>
+                    <div style="border: 2px solid #808080; padding: 2px;">
+                        <img src="img/raijin_descending.png" style="width: 150px; height: auto; display: block;" title="Descent">
+                        <p style="margin:2px 0 0; font-size:10px;">Descent</p>
+                    </div>
+                    <div style="border: 2px solid #808080; padding: 2px;">
+                        <img src="img/raijin_portrait.png" style="width: 150px; height: auto; display: block;" title="Portrait">
+                        <p style="margin:2px 0 0; font-size:10px;">Portrait</p>
+                    </div>
+                    <div style="border: 2px solid #808080; padding: 2px;">
+                        <img src="img/raijin_striking.png" style="width: 150px; height: auto; display: block;" title="Striking">
+                        <p style="margin:2px 0 0; font-size:10px;">Action</p>
+                    </div>
+                </div>
+            </div>
+        `
     }
 };
 
@@ -106,6 +162,7 @@ function openWindow(appId) {
         <div class="window-body">
             ${contentHtml}
         </div>
+        <div class="resize-handle" onmousedown="initResize(event, this.parentNode)"></div>
     `;
 
     win.addEventListener('mousedown', () => bringToFront(appId));
@@ -237,6 +294,46 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
     isDragging = false;
     currentDragElement = null;
+    isResizing = false;
+    currentResizeElement = null;
+});
+
+// Resize Functionality
+let isResizing = false;
+let currentResizeElement = null;
+let startWidth, startHeight, startX, startY;
+
+function initResize(e, windowElement) {
+    e.preventDefault();
+    e.stopPropagation(); // Prevent drag start
+    isResizing = true;
+    currentResizeElement = windowElement;
+    startX = e.clientX;
+    startY = e.clientY;
+
+    // Get current computed style dimensions (excluding borders if box-sizing is border-box, checking logic)
+    // The .window-98 width is likely set in style or defaults.
+    // CSS says width: 400px initially.
+    const rect = windowElement.getBoundingClientRect();
+    startWidth = rect.width;
+    startHeight = rect.height;
+
+    bringToFront(windowElement.id.replace('window-', ''));
+}
+
+document.addEventListener('mousemove', (e) => {
+    if (isDragging && currentDragElement) {
+        currentDragElement.style.left = `${e.clientX - dragOffsetX}px`;
+        currentDragElement.style.top = `${e.clientY - dragOffsetY}px`;
+    }
+    if (isResizing && currentResizeElement) {
+        const width = startWidth + (e.clientX - startX);
+        const height = startHeight + (e.clientY - startY);
+
+        // Minimum dictionary
+        if (width > 200) currentResizeElement.style.width = `${width}px`;
+        if (height > 150) currentResizeElement.style.height = `${height}px`;
+    }
 });
 
 // Icon double click simulated by HTML ondblclick
@@ -269,11 +366,82 @@ startButton.onclick = (e) => {
     toggleStartMenu();
 };
 
+// Text File Content Loading (Simulated fetch)
+const fileSystem = {
+    'raijin_lore.txt': `Raijin (雷神), also known as Kaminari-sama (雷様) or Raiden-sama (雷電様), is a god of lightning, thunder, and storms in Japanese mythology and the Shinto religion.
+
+The name "Raijin" is derived from the Japanese words "rai" (thunder) and "shin" or "jin" (god). He is typically depicted as a demon-looking spirit beating drums to create thunder, usually with the symbol 'tomoe' drawn on the drums.
+
+Origins:
+According to the Kojiki, Raijin was born from the rotting corpse of Izanami no Mikoto specifically, from her chest, after she died giving birth to the fire god Kagutsuchi and descended into Yomi (the underworld). When her husband Izanagi went to retrieve her, he was horrified by her decaying appearance and fled, with Raijin and other thunder deities chasing him.
+
+Appearance:
+He is often portrayed as a muscular, fierce figure with red skin, a terrifying face, and wild hair blowing in the storm. Despite his frightening appearance, he is a protective figure who defends Japan against invaders and is credited with the "Divine Wind" (Kamikaze) that stopped the Mongol invasions in 1274 and 1281.
+
+Companions:
+He is often accompanied by Fujin (the god of wind) and his son Raitaro (Thunder Boy).`,
+
+    'drums.txt': `The Drums of Thunder
+
+Raijin's most distinctive attribute is his ring of drums, known as 'Taiko'. He carries these drums on his back or floats surrounded by them in a ring.
+
+Thunder Creation:
+By striking these drums with his hammers/drumsticks, Raijin creates the sound of thunder that rolls across the sky. Each drum beat sends a shockwave that we hear as the rumble of a storm.
+
+Symbolism:
+The drums are decorated with the 'Tomoe' (巴) symbol, usually a Mitsudomoe (three comma shapes swirling in a circle). This symbol represents the cycle of life, the play of forces in the cosmos, and the trinity of heaven, earth, and humanity. It is strongly associated with Shinto shrines and the thunder god himself.
+
+Power:
+The drums are not just instruments but weapons of divine power. They channel the raw energy of the storm. In some legends, the sound of his drums can summon rain to end droughts, making him a vital deity for agriculture and farmers.`,
+
+    'folklore.txt': `Folklore & Superstitions
+
+Raijin is a figure of both fear and respect in Japanese culture.
+
+Hide Your Belly Button!
+One of the most famous superstitions involving Raijin is the warning parents give to children during thunderstorms: "Hide your belly button!" (Kaminari-sama ga heso o tori ni kuru). It is said that Raijin loves to eat human navels (belly buttons), so you must cover your stomach to protect yourself. This folklore likely originated as a way to ensure children stayed warm and didn't expose their stomachs to the sudden temperature drops that accompany rainstorms.
+
+The God Catcher
+There is a legend about Sugaru, the "God Catcher," who was ordered by the Emperor to catch the Thunder God to stop a storm. Sugaru prayed and then, with divine help, managed to bind Raijin, bringing him to the palace only to have the Emperor release him in exchange for ending the storms.
+
+Temples and Statues
+Statues of Raijin (often paired with Fujin, the Wind God) guard the entrances of many shrines and temples in Japan, most famously the Kaminarimon (Thunder Gate) of Senso-ji Temple in Asakusa, Tokyo. Standing there, they protect the sacred space from evil spirits and storms.`
+};
+
+async function openNotepad(filename) {
+    let content = "Loading...";
+    try {
+        const response = await fetch(filename);
+        if (response.ok) {
+            content = await response.text();
+        } else {
+            content = "Error loading file.";
+        }
+    } catch (e) {
+        content = fileSystem[filename] || "File not found.";
+    }
+
+    // Reuse or create notepad window
+    const appId = 'notepad-' + filename;
+
+    // Quick hack to reuse the openWindow structure but override content
+    // We'll define a temporary app entry
+    appContent[appId] = {
+        title: filename + ' - Notepad',
+        icon: 'https://win98icons.alexmeub.com/icons/png/notepad-0.png',
+        type: 'notepad',
+        content: content,
+        render: appContent['raijin-bio'].render
+    };
+
+    openWindow(appId);
+}
+
 // Close Start Menu when clicking outside
 document.addEventListener('click', (e) => {
-    if (startMenu.style.display === 'block' &&
+    if (startMenu.style.display === 'flex' &&
         !startMenu.contains(e.target) &&
-        e.target !== startButton) {
+        !startButton.contains(e.target)) {
         startMenu.style.display = 'none';
         startButton.classList.remove('active');
     }

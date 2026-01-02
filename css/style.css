@@ -128,6 +128,22 @@ body {
     overflow: hidden;
 }
 
+.resize-handle {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: nwse-resize;
+    /* Create the diagonal grip lines using a linear gradient */
+    background: linear-gradient(135deg,
+            transparent 20%, #808080 20%, #808080 30%, transparent 30%,
+            transparent 40%, #808080 40%, #808080 50%, transparent 50%,
+            transparent 60%, #808080 60%, #808080 70%, transparent 70%,
+            transparent 80%, #808080 80%, #808080 90%, transparent 90%);
+    z-index: 10;
+}
+
 /* Menu Bar (File Edit View...) */
 .menu-bar {
     display: flex;
@@ -394,7 +410,7 @@ body {
 }
 
 .start-side-banner {
-    width: 25px;
+    width: 32px;
     background: linear-gradient(to bottom, #000080, #1084d0 5%, #000080 15%);
     position: relative;
     /* We will position text absolutely inside */
@@ -403,15 +419,22 @@ body {
 .vertical-text {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 4px;
     transform: rotate(-90deg);
-    transform-origin: bottom left;
+    transform-origin: 0% 100%;
+    /* bottom left explicit */
     color: white;
     font-size: 18px;
     font-weight: bold;
     white-space: nowrap;
-    padding: 0 0 5px 5px;
-    /* Adjust padding to move it off the edge */
+    padding: 0 5px 5px 5px;
+    /* Adjust padding */
+    /* Fix for position off-screen: With -90deg rotation from bottom-left, 
+       the text swings out to the left. We need to push its origin or use a different origin.
+       Actually, standard "bottom left" of the ELEMENT is the pivot.
+       Let's use a safer transform-origin and position. */
+    left: 32px;
+    /* Offset to bring it back into the banner (approx height of text) */
 }
 
 /* Specific stronger bold for 98 */

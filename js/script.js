@@ -457,14 +457,13 @@ function openShutdown() {
     toggleStartMenu();
     shutdownDialog.style.display = 'flex';
 
-    // Center the window manually (better for drag behavior than CSS transform)
+    // Center the window manually
     const rect = shutdownDialog.getBoundingClientRect();
-    const x = (window.innerWidth - 350) / 2; // 350 is width defined in HTML/CSS
+    const x = (window.innerWidth - rect.width) / 2;
     const y = (window.innerHeight - rect.height) / 2;
 
-    // Default fallback if rect is empty (hidden)
     shutdownDialog.style.left = `${Math.max(0, x)}px`;
-    shutdownDialog.style.top = `${Math.max(0, (window.innerHeight - 200) / 2)}px`;
+    shutdownDialog.style.top = `${Math.max(0, y)}px`;
 }
 
 function closeShutdown() {
@@ -477,7 +476,10 @@ function performShutdown() {
     closeShutdown();
 
     if (action === 'shutdown') {
-        // Hide UI, show safe screen
+        // Try to close the tab
+        window.close();
+
+        // Hide UI, show safe screen (fallback)
         document.getElementById('taskbar').style.display = 'none';
         document.getElementById('desktop').style.display = 'none';
         shutdownScreen.style.display = 'flex';

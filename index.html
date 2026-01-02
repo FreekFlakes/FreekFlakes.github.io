@@ -40,6 +40,42 @@
 
     <!-- Windows Area -->
     <div id="window-area"></div>
+
+    <!-- Shutdown Dialog (Moved out of Taskbar) -->
+    <div id="window-shutdown" class="window-98" style="display: none; width: 350px; z-index: 9999;">
+        <div class="title-bar" onmousedown="startDrag(event, 'shutdown')">
+            <div class="title-bar-text">Shut Down Windows</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close" onclick="closeShutdown()">X</button>
+            </div>
+        </div>
+        <div class="window-body" style="padding: 15px; display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; gap: 15px;">
+                <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="32" height="32">
+                <div style="flex-grow: 1;">
+                    <p style="margin: 0 0 10px 0;">What do you want the computer to do?</p>
+
+                    <div class="radio-option">
+                        <input type="radio" name="shutdown-action" id="action-shutdown" value="shutdown" checked>
+                        <label for="action-shutdown">Shut down</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="shutdown-action" id="action-restart" value="restart">
+                        <label for="action-restart">Restart</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="shutdown-action" id="action-restart-dos" value="restart-dos">
+                        <label for="action-restart-dos">Restart in MS-DOS mode</label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 5px;">
+                <button class="win98-btn" onclick="performShutdown()">OK</button>
+                <button class="win98-btn" onclick="closeShutdown()">Cancel</button>
+                <button class="win98-btn">Help</button>
+            </div>
+        </div>
     </div>
 
     <!-- Taskbar -->
@@ -111,42 +147,6 @@
             </div>
         </div>
 
-        <!-- Shutdown Dialog -->
-        <div id="window-shutdown" class="window-98" style="display: none; width: 350px; z-index: 9999;">
-            <div class="title-bar" onmousedown="startDrag(event, 'shutdown')">
-                <div class="title-bar-text">Shut Down Windows</div>
-                <div class="title-bar-controls">
-                    <button aria-label="Close" onclick="closeShutdown()">X</button>
-                </div>
-            </div>
-            <div class="window-body" style="padding: 15px; display: flex; flex-direction: column; gap: 20px;">
-                <div style="display: flex; gap: 15px;">
-                    <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="32" height="32">
-                    <div style="flex-grow: 1;">
-                        <p style="margin: 0 0 10px 0;">What do you want the computer to do?</p>
-
-                        <div class="radio-option">
-                            <input type="radio" name="shutdown-action" id="action-shutdown" value="shutdown" checked>
-                            <label for="action-shutdown">Shut down</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" name="shutdown-action" id="action-restart" value="restart">
-                            <label for="action-restart">Restart</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" name="shutdown-action" id="action-restart-dos" value="restart-dos">
-                            <label for="action-restart-dos">Restart in MS-DOS mode</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display: flex; justify-content: flex-end; gap: 5px;">
-                    <button class="win98-btn" onclick="performShutdown()">OK</button>
-                    <button class="win98-btn" onclick="closeShutdown()">Cancel</button>
-                    <button class="win98-btn">Help</button>
-                </div>
-            </div>
-        </div>
 
         <!-- Shutdown Screen (The "It is now safe..." screen) -->
         <div id="shutdown-screen"

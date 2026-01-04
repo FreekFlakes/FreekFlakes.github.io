@@ -584,3 +584,219 @@ body {
     border-bottom-color: #000;
     display: block;
 }
+
+/* Browser Specifics (IE5/6 Style) */
+.ie-toolbar-container {
+    background-color: #c0c0c0;
+    display: flex;
+    flex-direction: column;
+    padding: 1px;
+    border-bottom: 2px solid #808080;
+    /* Separator from body */
+}
+
+/* Row 1: Menus + Throbber */
+.ie-menu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #fff;
+    /* Light bevel highlight */
+    padding-bottom: 1px;
+    margin-bottom: 1px;
+}
+
+.ie-menu-bar {
+    display: flex;
+    padding-left: 2px;
+}
+
+.ie-throbber {
+    width: 38px;
+    height: 38px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    margin-right: 2px;
+}
+
+/* Row 2: Standard Buttons */
+.ie-standard-buttons {
+    display: flex;
+    align-items: center;
+    padding: 2px 0;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #808080;
+    margin-bottom: 2px;
+}
+
+.ie-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid transparent;
+    /* No border by default */
+    font-size: 11px;
+    cursor: default;
+    gap: 1px;
+    color: black;
+    padding: 2px;
+}
+
+.ie-btn:hover {
+    border: 1px solid #fff;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+}
+
+.ie-btn:active {
+    border: 1px solid #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    transform: translate(1px, 1px);
+}
+
+.ie-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.ie-separator {
+    width: 2px;
+    height: 36px;
+    background-color: #808080;
+    border-right: 1px solid #fff;
+    margin: 0 4px;
+}
+
+/* Row 3: Address Bar */
+.ie-address-row {
+    display: flex;
+    align-items: center;
+    padding: 2px 4px;
+    gap: 4px;
+    border-top: 1px solid #fff;
+    margin-bottom: 2px;
+    font-size: 11px;
+}
+
+.ie-handle {
+    width: 3px;
+    height: 18px;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #808080;
+    background-color: #c0c0c0;
+    margin-right: 2px;
+}
+
+.ie-address-label {
+    color: #000;
+    padding-right: 2px;
+}
+
+.ie-address-input-wrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #808080;
+    /* Inset */
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    height: 20px;
+    padding: 0 2px;
+}
+
+.ie-page-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+.ie-address-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11px;
+}
+
+.ie-go-button {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 0 5px;
+    height: 22px;
+    background-color: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    font-size: 11px;
+    cursor: default;
+}
+
+.ie-go-button:active {
+    border: 2px solid #000;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+}
+
+.ie-links-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 5px;
+}
+
+.ie-body {
+    flex-grow: 1;
+    background-color: #fff;
+    border: 2px solid #808080;
+    /* Sunken field */
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    margin: 0 2px 2px 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Status Bar */
+.ie-status-bar {
+    height: 20px;
+    background-color: #c0c0c0;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    gap: 2px;
+    border-top: 1px solid #808080;
+}
+
+.ie-status-field {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    background-color: #c0c0c0;
+    border: 1px solid #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    font-size: 11px;
+    gap: 5px;
+}
+
+.ie-status-main {
+    flex-grow: 1;
+}
+
+.ie-status-icon {
+    width: 14px;
+    height: 14px;
+}

@@ -123,6 +123,104 @@ const appContent = {
                 </div>
             </div>
         `
+    },
+    'internet-explorer': {
+        title: 'Microsoft Internet Explorer',
+        icon: 'https://win98icons.alexmeub.com/icons/png/msie1-0.png',
+        type: 'browser',
+        render: () => `
+            <div class="ie-toolbar-container">
+                <div class="ie-menu-row">
+                    <div class="ie-menu-bar">
+                        <div class="menu-item">File</div>
+                        <div class="menu-item">Edit</div>
+                        <div class="menu-item">View</div>
+                        <div class="menu-item">Favorites</div>
+                        <div class="menu-item">Tools</div>
+                        <div class="menu-item">Help</div>
+                    </div>
+                    <div class="ie-throbber">
+                        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" style="width:24px; height:24px;">
+                    </div>
+                </div>
+                <div class="ie-standard-buttons">
+                    <div class="ie-handle"></div>
+                    <button class="ie-btn" title="Back">
+                        <img src="https://win98icons.alexmeub.com/icons/png/arrow_left-0.png">
+                        <span>Back</span>
+                    </button>
+                    <button class="ie-btn" title="Forward">
+                        <img src="https://win98icons.alexmeub.com/icons/png/arrow_right-0.png">
+                        <span>Forward</span>
+                    </button>
+                    <button class="ie-btn" title="Stop">
+                        <img src="https://win98icons.alexmeub.com/icons/png/msg_error-0.png">
+                        <span>Stop</span>
+                    </button>
+                    <button class="ie-btn" title="Refresh">
+                        <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_full-0.png">
+                        <span>Refresh</span>
+                    </button>
+                    <button class="ie-btn" title="Home">
+                        <img src="https://win98icons.alexmeub.com/icons/png/house-0.png">
+                        <span>Home</span>
+                    </button>
+                    <div class="ie-separator"></div>
+                    <button class="ie-btn" title="Search">
+                        <img src="https://win98icons.alexmeub.com/icons/png/search_file-0.png">
+                        <span>Search</span>
+                    </button>
+                    <button class="ie-btn" title="Favorites">
+                        <img src="https://win98icons.alexmeub.com/icons/png/directory_favorites-0.png">
+                        <span>Favorites</span>
+                    </button>
+                    <button class="ie-btn" title="History">
+                        <img src="https://win98icons.alexmeub.com/icons/png/history-0.png"> <!-- Fallback if not exact -->
+                        <span>History</span>
+                    </button>
+                    
+                    <div class="ie-btn" style="margin-left:auto; min-width: 20px;">
+                        <span>»</span>
+                    </div>
+                </div>
+                <div class="ie-address-row">
+                    <div class="ie-handle"></div>
+                    <span class="ie-address-label">Address</span>
+                    <div class="ie-address-input-wrapper">
+                        <img class="ie-page-icon" src="https://win98icons.alexmeub.com/icons/png/msie1-0.png">
+                        <input type="text" class="ie-address-input" value="https://www.google.com/search?igu=1" onkeydown="if(event.key === 'Enter') navigateBrowser(this)">
+                        <span style="font-size: 10px; color: #000;">▼</span>
+                    </div>
+                    <div class="ie-go-button" onclick="navigateBrowser(this.parentNode.querySelector('.ie-address-input'))">
+                        <img src="https://win98icons.alexmeub.com/icons/png/arrow_right-0.png" style="width:12px; height:12px;">
+                        <span>Go</span>
+                    </div>
+                    <div class="ie-links-container">
+                        <div class="ie-handle"></div>
+                        <span style="font-size: 11px;">Links</span>
+                        <span style="font-size: 10px;">»</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ie-body">
+                <iframe id="browser-frame-internet-explorer" src="https://www.google.com/search?igu=1" style="width:100%; height:100%; border:none;"></iframe>
+            </div>
+
+            <div class="ie-status-bar">
+                <div class="ie-status-field ie-status-main">
+                    <img src="https://win98icons.alexmeub.com/icons/png/msie1-0.png" class="ie-status-icon">
+                    <span>Done</span>
+                </div>
+                <div class="ie-status-field">
+                     <div style="width: 10px; height: 100%;"></div>
+                </div>
+                <div class="ie-status-field">
+                    <img src="https://win98icons.alexmeub.com/icons/png/world-0.png" class="ie-status-icon">
+                    <span>Internet</span>
+                </div>
+            </div>
+        `
     }
 };
 
@@ -489,6 +587,19 @@ function performShutdown() {
 
     } else if (action === 'restart' || action === 'restart-dos') {
         location.reload();
+    }
+}
+
+function navigateBrowser(inputElement) {
+    const url = inputElement.value;
+    const iframe = document.getElementById('browser-frame-internet-explorer');
+    if (iframe) {
+        // Basic check to add protocol if missing
+        let targetUrl = url;
+        if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+            targetUrl = 'https://' + targetUrl;
+        }
+        iframe.src = targetUrl;
     }
 }
 
